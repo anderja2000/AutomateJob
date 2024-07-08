@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>job search</title>
+    <link rel="stylesheet" href="interface.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/e8756853c9.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <!-- FONT to be used for headers and such  -->
+  </head>
+
+  <body>
+    <div class="content">
+      <div class="header">
+        <div class="icons"></div>
+
+        <h1>Automate Job search</h1>
+        <div class="icons"></div>
+      </div>
+      <form id="searchForm">
+        <div class="form-container">
+          <div class="form-group" id="attributes">
+            <div class="row">
+              <label class="title" for="jobTitle">Job Title:</label>
+              <input type="text" id="jobTitle" name="jobTitle" required />
+            </div>
+            <div class="row">
+              <label class="title" for="location">Location:</label>
+              <input type="text" id="location" name="location" required />
+            </div>
+          </div>
+          <div class="row centered">
+            <button type="submit">submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <script src="public.js"></script>
+    <script type="module">
+      console.log("hi");
+      let title, jobLocation;
+      function logInputValues() {
+        // Select all input elements
+        const inputs = document.querySelectorAll("input");
+
+        // Loop through each input
+        inputs.forEach((input) => {
+          if (input.type === "text") {
+            if (input.name === "jobTitle") {
+              title = input.value;
+            } else if (input.name === "location") {
+              jobLocation = input.value;
+            }
+          }
+        });
+      }
+
+      // Add an event listener to the form
+      document
+        .getElementById("searchForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault(); // This should prevent the form from submitting
+          console.log("Form submission prevented");
+          logInputValues();
+          console.log(`title: ${title} : location: ${jobLocation}`);
+          sendToApi();
+        });
+
+      const sendToApi = async () => {
+        const options = {
+          method: "GET",
+          url: "https://job-search-api1.p.rapidapi.com/v1/job-description-search",
+          params: {
+            q: title,
+            page: "1",
+            country: "us",
+            city: jobLocation,
+          },
+          headers: {
+            "x-rapidapi-key":
+              "ed17161d59msh162f135340c0d91p11cb96jsncad21f24ad91",
+            "x-rapidapi-host": "job-search-api1.p.rapidapi.com",
+          },
+        };
+
+        try {
+          const response = await axios.request(options);
+          let data = response.data;
+          // store the data in firestore
+          // const db = firebase.
+          console.log(data);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+    </script>
+  </body>
+</html>
