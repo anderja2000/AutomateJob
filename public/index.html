@@ -50,8 +50,13 @@
 
     <script src="public.js"></script>
     <script type="module">
+    
+      // importing the database created in firebase-config.js 
+      // import {db} from './firebase-config.js';
+      import {collection, addDoc, serverTimestamp} from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js';
+      
       console.log("hi");
-      let title, jobLocation;
+      let title, jobLocation; 
       function logInputValues() {
         // Select all input elements
         const inputs = document.querySelectorAll("input");
@@ -99,9 +104,14 @@
         try {
           const response = await axios.request(options);
           let data = response.data;
+
+          // for ( let job of data) { 
+          //   console.log(job)
+          // }
           // store the data in firestore
           // const db = firebase.
-          console.log(data);
+            console.log(data);
+          console.log(data.jobs);
         } catch (error) {
           console.error(error);
         }
