@@ -48,15 +48,20 @@
       </form>
     </div>
 
+    
+
     <script src="public.js"></script>
     <script type="module">
-    
-      // importing the database created in firebase-config.js 
+      // importing the database created in firebase-config.js
       // import {db} from './firebase-config.js';
-      import {collection, addDoc, serverTimestamp} from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js';
-      
+      import {
+        collection,
+        addDoc,
+        serverTimestamp,
+      } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
       console.log("hi");
-      let title, jobLocation; 
+      let title, jobLocation;
       function logInputValues() {
         // Select all input elements
         const inputs = document.querySelectorAll("input");
@@ -73,49 +78,32 @@
         });
       }
 
-      // Add an event listener to the form
       document
         .getElementById("searchForm")
-        .addEventListener("submit", function (event) {
-          event.preventDefault(); // This should prevent the form from submitting
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
           console.log("Form submission prevented");
           logInputValues();
           console.log(`title: ${title} : location: ${jobLocation}`);
-          sendToApi();
-        });
 
-      const sendToApi = async () => {
-        const options = {
-          method: "GET",
-          url: "https://job-search-api1.p.rapidapi.com/v1/job-description-search",
-          params: {
-            q: title,
-            page: "1",
-            country: "us",
-            city: jobLocation,
-          },
-          headers: {
-            "x-rapidapi-key":
-              "ed17161d59msh162f135340c0d91p11cb96jsncad21f24ad91",
-            "x-rapidapi-host": "job-search-api1.p.rapidapi.com",
-          },
-        };
+          try {
+            const response = await axios.post("/api/search-and-store-jobs", {
+              jobTitle: title,
+              location: jobLocation,
+            });
+            console.log("Server response:", response.data);
 
-        try {
-          const response = await axios.request(options);
-          let data = response.data;
+            if (response.data.jobs) {
+              console.log("Jobs received from server:", response.data.jobs);
+              // You can process or display the jobs data here
+            }
 
-          // for ( let job of data) { 
-          //   console.log(job)
-          // }
-          // store the data in firestore
-          // const db = firebase.
-            console.log(data);
-          console.log(data.jobs);
-        } catch (error) {
-          console.error(error);
-        }
-      };
+            alert("Jobs fetched and stored successfully");
+          } catch (error) {
+            console.error("Error:", error);
+            alert("An error occurred. Please try again.");
+          }
+        }); 
     </script>
   </body>
 </html>
