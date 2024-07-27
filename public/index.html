@@ -48,62 +48,17 @@
       </form>
     </div>
 
+
+    <div id="latestJobs">
+      <h1> latest 10 jobs</h1>
+
+      <ul id="jobList">
+
+      </ul>
+    </div>
     
 
-    <script src="public.js"></script>
-    <script type="module">
-      // importing the database created in firebase-config.js
-      // import {db} from './firebase-config.js';
-      import {
-        collection,
-        addDoc,
-        serverTimestamp,
-      } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-
-      console.log("hi");
-      let title, jobLocation;
-      function logInputValues() {
-        // Select all input elements
-        const inputs = document.querySelectorAll("input");
-
-        // Loop through each input
-        inputs.forEach((input) => {
-          if (input.type === "text") {
-            if (input.name === "jobTitle") {
-              title = input.value;
-            } else if (input.name === "location") {
-              jobLocation = input.value;
-            }
-          }
-        });
-      }
-
-      document
-        .getElementById("searchForm")
-        .addEventListener("submit", async function (event) {
-          event.preventDefault();
-          console.log("Form submission prevented");
-          logInputValues();
-          console.log(`title: ${title} : location: ${jobLocation}`);
-
-          try {
-            const response = await axios.post("/api/search-and-store-jobs", {
-              jobTitle: title,
-              location: jobLocation,
-            });
-            console.log("Server response:", response.data);
-
-            if (response.data.jobs) {
-              console.log("Jobs received from server:", response.data.jobs);
-              // You can process or display the jobs data here
-            }
-
-            alert("Jobs fetched and stored successfully");
-          } catch (error) {
-            console.error("Error:", error);
-            alert("An error occurred. Please try again.");
-          }
-        }); 
-    </script>
+    <script src="public.js" type="module"></script>
+    
   </body>
 </html>
