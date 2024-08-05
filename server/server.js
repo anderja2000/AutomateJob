@@ -29,7 +29,7 @@ app.get("/api/latest-jobs", async (req, res) => {
       jobs.push({ id: doc.id, ...doc.data() });
     });
 
-    res.json(jobs);
+    res.json({jobs});
   } catch (error) {
     console.error("Error fetching latest jobs:", error);
     res.status(500).json({ error: "An error occurred while fetching jobs." });

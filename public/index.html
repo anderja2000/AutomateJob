@@ -1,64 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>job search</title>
-    <link rel="stylesheet" href="interface.css" />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap"
-      rel="stylesheet"
-    />
-    <script
-      src="https://kit.fontawesome.com/e8756853c9.js"
-      crossorigin="anonymous"
-    ></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
-    <!-- FONT to be used for headers and such  -->
-  </head>
-
-  <body>
-    <div class="content">
-      <div class="header">
-        <div class="icons"></div>
-
-        <h1>Automate Job search</h1>
-        <div class="icons"></div>
-      </div>
-      <form id="searchForm">
-        <div class="form-container">
-          <div class="form-group" id="attributes">
-            <div class="row">
-              <label class="title" for="jobTitle">Job Title:</label>
-              <input type="text" id="jobTitle" name="jobTitle" required />
-            </div>
-            <div class="row">
-              <label class="title" for="location">Location:</label>
-              <input type="text" id="location" name="location" required />
-            </div>
-          </div>
-          <div class="row centered">
-            <button type="submit">submit</button>
-          </div>
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Job Search</title>
+      <link rel="stylesheet" href="interface.css" />
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap" rel="stylesheet" />
+      <script src="https://kit.fontawesome.com/e8756853c9.js" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    </head>
+    <body>
+      <div class="content">
+        <div class="header">
+          <div class="icons"></div>
+          <h1>Automate Job Search</h1>
+          <div class="icons"></div>
         </div>
-      </form>
-    </div>
-
-
-    <div id="latestJobs">
-      <h1> latest 10 jobs</h1>
-
-      <ul id="jobList">
-
-      </ul>
-    </div>
-    
-
-    <script src="public.js" type="module"></script>
-    
-  </body>
-</html>
+        <form id="searchForm">
+          <div class="form-container">
+            <div class="form-group" id="attributes">
+              <div class="row">
+                <label class="title" for="jobTitle">Job Title:</label>
+                <input type="text" id="jobTitle" name="jobTitle" required />
+              </div>
+              <div class="row">
+                <label class="title" for="location">Location:</label>
+                <input type="text" id="location" name="location" required />
+              </div>  
+            </div>
+            <div class="row centered">
+              <button type="submit">Submit</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div id="latestJobs">
+        <h1>Latest 10 Jobs</h1>
+        <section class="card" id="jobList"></section>
+      </div>
+      <script src="public.js" type="module"></script>
+    </body>
+  </html>

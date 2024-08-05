@@ -54,12 +54,70 @@ function QueryInputs() {
     }
   });
 }
+function displayJobs(jobs) {
+  let jobList = document.getElementById("jobList");
+  jobList.innerHTML = ""; // clear any existing jobs
 
-// async function fetchJobs() {
-//   try {
-//     const response = await axios.get
-//   }
-// }
+  jobs.forEach((job) => {
+    const article = document.createElement("article");
+
+    const header = document.createElement("h1");
+    header.classList.add("accordion-header");
+    header.textContent = job.title;
+
+    const content = document.createElement("div");
+    content.classList.add("accordion-content");
+
+    const container = document.createElement("div");
+    container.classList.add("container");
+    container.innerHTML = `
+      <p>Company: ${job.company}</p>
+      <p>Location: ${job.location}</p>
+      <p>Date Posted: ${job.timestamp}</p>
+      <p>Description: ${job.description.substring(0, 200)}...</p>
+      <p>Apply at: 
+        ${job.jobProviders
+          .map(
+            (provider) =>
+              `<a href="${provider.url}" target="_blank">${provider.jobProvider}</a>`
+          )
+          .join(", ")}
+      </p>
+    `;
+
+    content.appendChild(container);
+    article.appendChild(header);
+    article.appendChild(content);
+
+    header.addEventListener("click", () => {
+      const isSelected = article.classList.contains("selected");
+
+      // Close all accordion items
+      document.querySelectorAll("#jobList article").forEach((otherItem) => {
+        otherItem.classList.remove("selected");
+      });
+
+      // Open the clicked item if it wasn't already open
+      if (!isSelected) {
+        article.classList.add("selected");
+      }
+    });
+
+    jobList.appendChild(article);
+  });
+}
+
+async function fetchShowJobs() {
+  try {
+    const response = await axios.get("/api/latest-jobs");
+    let latestJobs = response.data.jobs;
+    if (latestJobs) {
+      displayJobs(latestJobs);
+    }
+  } catch (error) {
+    console.error("Error fetching latest jobs:", error);
+  }
+}
 
 document
   .getElementById("searchForm")
@@ -87,7 +145,11 @@ document
       alert("An error occurred. Please try again.");
     }
   });
-// Run the function when the DOM is fully loaded
-document.addEventListener("DOMContentLoaded", randEmoji);
 
-document.getElementById("jobList").innerHTML = "🥰";  
+// Run the function when the DOM is fully loaded
+document.addEventListener("DOMContentLoaded", init);
+
+function init() {
+  randEmoji();
+  fetchShowJobs();
+}

@@ -2,10 +2,13 @@ body {
   margin: 0;
   padding: 0;
   background-color: #f8bcbc;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .content {
-  margin: 100px;
+  margin: 100px auto;
   font-family: "Fjalla One", sans-serif;
   font-weight: 400;
   font-style: normal;
@@ -31,14 +34,13 @@ h1 {
 }
 
 #searchForm > .form-group:first-child {
-  width: 120px; /* Adjust this value as needed */
+  width: 120px;
 }
 
 #attributes {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  /* Allow this to take up remaining space */
 }
 
 .checkbox-group {
@@ -65,24 +67,22 @@ label {
 }
 
 #searchForm {
-  display: block; /* Changed from flex to block */
+  display: block;
   height: auto;
   border: 2px black ridge;
   padding: 60px;
   border-radius: 0 20px;
-  /* padding: 30px; */
 }
 
 .form-container {
   padding: 30px;
   align-items: center;
-  border: 2px red ridge; 
+  border: 2px red ridge;
   justify-items: center;
-  width: 400px; 
+  width: 400px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* height: 100vh; */
 }
 
 .header {
@@ -106,8 +106,6 @@ label {
   display: flex;
   flex-direction: row;
   gap: 10px;
-  /* justify-content: center;
-  align-items: center; */
 }
 
 .row label.title {
@@ -119,9 +117,143 @@ label {
   height: 30px;
   padding: 0 10px;
   box-sizing: border-box;
-  /* Allow input to grow and fill available space */
 }
 
 button[type="submit"] {
-  margin-top: 20px; /* Add some margin to separate from the form groups */
+  margin-top: 20px;
+}
+
+#latestJobs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  padding: 20px;
+  width: 80%;
+  margin: 0 auto;
+}
+
+#jobList {
+  /* background-color: #9f2727; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.card {
+  width: 100%;
+  margin: 20px 0;
+  border-radius: 2px;
+  background: white;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12),
+    0 3px 1px -2px rgba(0, 0, 0, 0.2);
+}
+
+article {
+  position: relative;
+  font-family: "Roboto", sans-serif;
+  transition: all 0.3s;
+  background: #fd16e2;
+}
+
+article.selected {
+  color: white;
+  transform: scale(1.1);
+  box-shadow: 0 0 5px rgba(2, 2, 2, 0.4);
+  z-index: 2;
+}
+
+.accordion-header {
+  position: relative;
+  background: #3f51b5;
+  padding: 20px 75px 20px 30px;
+  font-size: 20px;
+  line-height: 30px;
+  color: #fff;
+  overflow: hidden;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.accordion-header:hover,
+article.selected .accordion-header {
+  background: #3949ab;
+}
+
+.accordion-header:before,
+.accordion-header:after {
+  content: "";
+  position: absolute;
+  right: 30px;
+  top: 50%;
+  width: 20px;
+  height: 2px;
+  background: #ee92e8;
+  transition: transform 0.3s;
+}
+
+.accordion-header:before {
+  transform: rotate(0deg);
+}
+
+.accordion-header:after {
+  transform: rotate(90deg);
+}
+
+article.selected .accordion-header:before {
+  transform: rotate(45deg);
+}
+
+article.selected .accordion-header:after {
+  transform: rotate(135deg);
+}
+
+.accordion-content {
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transform: translateY(20px);
+  transition: all 0.4s ease-out;
+}
+
+article.selected .accordion-content {
+  max-height: 1000px;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.accordion-content p {
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 20px 30px;
+  /* background: #E8EAF6; */
+  font-size: 16px;
+  line-height: 24px;
+  /* color: #000; */
+  text-shadow: 2px 2px 2px black;
+}
+
+.accordion-content .container {
+  -webkit-box-shadow: 10px 10px 44px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 10px 10px 44px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 10px 10px 44px 0px rgba(0, 0, 0, 0.75);
+  width: 80%;
+  background-color: #ee92e8;
+  padding: 15px;
+  border: 2px inset pink;
+  margin-bottom: 30px;
+ 
+  
+}
+
+.accordion-content .container p {
+  margin: 10px 0;
 }
