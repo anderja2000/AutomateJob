@@ -29,7 +29,7 @@ app.get("/api/latest-jobs", async (req, res) => {
       jobs.push({ id: doc.id, ...doc.data() });
     });
 
-    res.json({jobs});
+    res.json({ jobs });
   } catch (error) {
     console.error("Error fetching latest jobs:", error);
     res.status(500).json({ error: "An error occurred while fetching jobs." });
@@ -89,25 +89,25 @@ app.post("/api/search-and-store-jobs", async (req, res) => {
       console.log(`custom Id: ${customDocId}`);
 
       // Create a document reference with the custom ID
-      // const docRef = db.collection("job-search").doc(customDocId);
+      const docRef = db.collection("job-search").doc(customDocId);
 
       // Set the document data
-      // batch.set(
-      //   docRef,
-      //   {
-      //     title: job.title,
-      //     company: job.company,
-      //     location: job.location,
-      //     description: job.description || "No description available",
-      //     jobProviders: job.jobProviders,
-      //     timestamp: job.datePosted,
-      //   },
-      //   { merge: true }
-      // ); // Use merge: true to update existing documents without overwriting
+      batch.set(
+        docRef,
+        {
+          title: job.title,
+          company: job.company,
+          location: job.location,
+          description: job.description || "No description available",
+          jobProviders: job.jobProviders,
+          timestamp: job.datePosted,
+        },
+        { merge: true }
+      ); // Use merge: true to update existing documents without overwriting
     });
 
     // Commit the batch
-    // await batch.commit();
+    await batch.commit();
 
     res.json({ message: "Jobs fetched and stored", jobs: jobs });
   } catch (error) {
